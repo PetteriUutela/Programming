@@ -1,0 +1,83 @@
+// A simple c++ code, that asks the user for two matrices and calculates the matrix product.
+// The code makes sure that the user gives correct dimensions for the matrices.
+// This means that matrix A must have same column dimension as B has row dimension (comes from linear algebra).
+
+
+
+
+
+#include "stdafx.h"
+#include <iomanip>      // std::setw
+#include <iostream>
+using namespace std;
+
+int main()
+{
+// Initialize the sizes of the matrices
+	int r1, c1, r2, c2;
+	int A[10][10];
+	int B[10][10];
+	int C[10][10];
+// Boolean to make sure the user gives correct matrix dimensions
+	bool dimensionOK = false;
+
+// Ask for the matrix dimensions until the user gives correct dimensions
+	do { 
+		cout << endl << "Number of rows in first matrix: ";
+		cin >> r1;
+		cout << endl << "Number of columns in first matrix: : ";
+		cin >> c1;
+		cout << endl << "Number of rows in second matrix: ";
+		cin >> r2;
+		cout << endl << "Number of columns in second matrix: : ";
+		cin >> c2;
+		if (c1 == r2) {
+			dimensionOK = true;
+			cout << endl << "Matrix dimensions agree";
+		}else{
+			cout << endl << "Dimension missmatch";
+		}
+	}while (!dimensionOK);
+
+// Ask the user for the elements in matrix 1.
+	for (int i = 0; i < r1; i++) {
+		for (int j = 0; j < c1; j++) {
+			cout << endl << "-- A matrix --\n Enter the element of row " << i + 1
+				<< " column " << j + 1 << " : ";
+			cin >> A[i][j];
+		}
+	}
+// Ask the user for the elements in matrix 2
+	for (int i = 0; i < r2; i++) {
+		for (int j = 0; j < c2; j++) {
+			cout << endl << "-- B matrix --\n Enter the element of row " << i + 1
+				<< " column " << j + 1 << " : ";
+			cin >> B[i][j];
+		}
+	}
+
+// Begin the matrix multiplication.
+	for (int i = 0; i < r1; i++)						// For loop that gathers the rows for matrix 3
+	{
+		for (int j = 0; j < c2; j++)					// For loop that gathers the columns for matrix 3
+		{
+			C[i][j] = 0;								// Initializing the matrix 3 element as 0.
+			for (int k = 0; k < r2; k++)				// Loop through the columns of matrix a (row i)
+			{
+				C[i][j] += A[i][k] * B[k][j];	// Basic dot product (you just have to do it by looping).
+			}
+		}
+	}
+
+// Print the computed matrix
+	cout << "Computed A * B = C matrix is:" << endl;
+	for (int i = 0; i < r1; i++) {						// Rows
+		for (int j = 0; j < c2; j++) {					// Columns
+			cout << setw(4) << C[i][j] << setw(4);
+		}
+		cout << endl;
+	}
+
+
+    return 0;
+}
